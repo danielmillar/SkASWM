@@ -6,7 +6,7 @@ import ch.njol.skript.lang.ExpressionType
 import ch.njol.skript.lang.SkriptParser
 import ch.njol.skript.lang.util.SimpleExpression
 import ch.njol.util.Kleenean
-import me.danielmillar.skaswm.elements.effects.EffSetupSlimeLoader
+import me.danielmillar.skaswm.elements.effects.EffInitializeSlime.Companion.getSlimeLoader
 import org.bukkit.event.Event
 
 class ExprGetSlimeWorlds : SimpleExpression<Int>() {
@@ -18,7 +18,7 @@ class ExprGetSlimeWorlds : SimpleExpression<Int>() {
 	}
 
 	override fun toString(event: Event?, debug: Boolean): String {
-		return "Number of slime worlds"
+		return "Slime loader: ${getSlimeLoader()}, number of worlds"
 	}
 
 	override fun init(expressions: Array<out Expression<*>>?, matchedPattern: Int, isDelayed: Kleenean, parser: SkriptParser.ParseResult): Boolean {
@@ -34,7 +34,7 @@ class ExprGetSlimeWorlds : SimpleExpression<Int>() {
 	}
 
 	override fun get(event: Event): Array<Int> {
-		val slimeLoader = EffSetupSlimeLoader.getSlimeLoader() ?: return emptyArray()
+		val slimeLoader = getSlimeLoader() ?: return emptyArray()
 		return arrayOf(slimeLoader.listWorlds().size)
 	}
 }
