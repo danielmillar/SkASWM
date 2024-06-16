@@ -26,7 +26,7 @@ class ExprCreateSlimeProperties : SimpleExpression<SlimePropertyMap>() {
 				ExprCreateSlimeProperties::class.java,
 				SlimePropertyMap::class.java,
 				ExpressionType.SIMPLE,
-				"[default] slime world property map"
+				"[default|new] slime world property map"
 			)
 		}
 	}
