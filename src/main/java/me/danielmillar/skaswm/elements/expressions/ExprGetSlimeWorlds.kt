@@ -13,7 +13,12 @@ class ExprGetSlimeWorlds : SimpleExpression<Int>() {
 
 	companion object {
 		init {
-			Skript.registerExpression(ExprGetSlimeWorlds::class.java, Int::class.javaObjectType, ExpressionType.SIMPLE, "[get] number of slime worlds")
+			Skript.registerExpression(
+				ExprGetSlimeWorlds::class.java,
+				Int::class.javaObjectType,
+				ExpressionType.SIMPLE,
+				"[get] number of slime worlds"
+			)
 		}
 	}
 
@@ -21,7 +26,12 @@ class ExprGetSlimeWorlds : SimpleExpression<Int>() {
 		return "Slime loader: ${getSlimeLoader()}, number of worlds"
 	}
 
-	override fun init(expressions: Array<out Expression<*>>?, matchedPattern: Int, isDelayed: Kleenean, parser: SkriptParser.ParseResult): Boolean {
+	override fun init(
+		expressions: Array<out Expression<*>>,
+		matchedPattern: Int,
+		isDelayed: Kleenean,
+		parser: SkriptParser.ParseResult
+	): Boolean {
 		return true
 	}
 
