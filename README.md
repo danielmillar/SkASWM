@@ -1,0 +1,2 @@
+# SkASWM (Addon for SlimeWorldManager)
+
