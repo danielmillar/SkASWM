@@ -90,7 +90,11 @@ class ExprModifySlimeProperties : SimpleExpression<Any>() {
 			"Integer" -> {
 				try {
 					val prop = property.prop as SlimeProperty<Int>
-					properties.setValue(prop, Util.anyToInt(value))
+					val convertedValue = Util.anyToInt(value) ?: run {
+						Skript.error("Expected an Int value for property ${property.name} but got null instead!")
+						return
+					}
+					properties.setValue(prop, convertedValue)
 				} catch (e: NumberFormatException) {
 					Skript.error("Expected an Integer value for property ${property.name}")
 				}
@@ -99,7 +103,11 @@ class ExprModifySlimeProperties : SimpleExpression<Any>() {
 			"Float" -> {
 				try {
 					val prop = property.prop as SlimeProperty<Float>
-					properties.setValue(prop, Util.anyToFloat(value))
+					val convertedValue = Util.anyToFloat(value) ?: run {
+						Skript.error("Expected an Float value for property ${property.name} but got null instead!")
+						return
+					}
+					properties.setValue(prop, convertedValue)
 				} catch (e: NumberFormatException) {
 					Skript.error("Expected an Integer value for property ${property.name}")
 				}
@@ -108,7 +116,11 @@ class ExprModifySlimeProperties : SimpleExpression<Any>() {
 			"Boolean" -> {
 				try {
 					val prop = property.prop as SlimeProperty<Boolean>
-					properties.setValue(prop, Util.anyToBoolean(value))
+					val convertedValue = Util.anyToBoolean(value) ?: run {
+						Skript.error("Expected an Boolean value for property ${property.name} but got null instead!")
+						return
+					}
+					properties.setValue(prop, convertedValue)
 				} catch (e: NumberFormatException) {
 					Skript.error("Expected an Integer value for property ${property.name}")
 				}

@@ -20,7 +20,6 @@ object Util {
 
 			is Char -> value.code
 
-			// For unsupported types, return null
 			else -> null
 		}
 	}
@@ -43,26 +42,21 @@ object Util {
 
 			is Char -> value.code.toFloat()
 
-			// For unsupported types, return null
 			else -> null
 		}
 	}
 
 	fun anyToBoolean(value: Any): Boolean? {
 		return when (value) {
-			// Directly return if it's already a Boolean
 			is Boolean -> value
 
-			// Handle Int, Long, Float, Double
 			is Int -> value != 0
 			is Long -> value != 0L
 			is Float -> value != 0.0f
 			is Double -> value != 0.0
 
-			// Handle String, common interpretations of true/false
 			is String -> value.equals("true", ignoreCase = true) || value == "1"
 
-			// For unsupported types, return null
 			else -> null
 		}
 	}
