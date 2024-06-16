@@ -1,7 +1,10 @@
 name: SkASWM
+description: Skript addon for managing SlimeWorldManager
 version: '${version}'
 main: me.danielmillar.skaswm.SkASWM
 api-version: '1.20'
+authors:
+  - Daniel Millar
 load: POSTWORLD
 depend:
   - Skript
