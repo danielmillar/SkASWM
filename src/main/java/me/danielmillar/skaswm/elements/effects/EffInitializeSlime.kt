@@ -7,7 +7,6 @@ import ch.njol.skript.lang.SkriptParser
 import ch.njol.util.Kleenean
 import com.infernalsuite.aswm.api.SlimePlugin
 import com.infernalsuite.aswm.api.loaders.SlimeLoader
-import me.danielmillar.skaswm.SkASWM
 import me.danielmillar.skaswm.elements.SlimeLoaderTypeEnum
 import org.bukkit.Bukkit
 import org.bukkit.event.Event
@@ -56,6 +55,8 @@ class EffInitializeSlime : Effect() {
 	override fun execute(event: Event) {
 		val bukkitPlugin = Bukkit.getPluginManager().getPlugin("SlimeWorldManager") ?: return
 		slimePlugin = bukkitPlugin as SlimePlugin
-		slimeLoader = slimePlugin.getLoader(SlimeLoaderTypeEnum.valueOf(loaderType.getSingle(event).toString()).toString().lowercase())
+		slimeLoader = slimePlugin.getLoader(
+			SlimeLoaderTypeEnum.valueOf(loaderType.getSingle(event).toString()).toString().lowercase()
+		)
 	}
 }
