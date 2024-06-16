@@ -13,6 +13,7 @@ import ch.njol.util.Kleenean
 import com.infernalsuite.aswm.api.world.properties.SlimeProperty
 import com.infernalsuite.aswm.api.world.properties.SlimePropertyMap
 import me.danielmillar.skaswm.elements.SlimePropertiesEnum
+import me.danielmillar.skaswm.util.Util
 import org.bukkit.event.Event
 
 @Description("Modify a property value of SlimePropertyMap")
@@ -55,7 +56,7 @@ class ExprModifySlimeProperties : SimpleExpression<Any>() {
 			Skript.error("Cannot ${mode.toString()} a property type")
 			return emptyArray()
 		}
-		return arrayOf(if (this.isSingle) Any::class.java else Class::class.java)
+		return arrayOf(Any::class.java)
 	}
 
 	@Suppress("unchecked_cast")
@@ -82,38 +83,34 @@ class ExprModifySlimeProperties : SimpleExpression<Any>() {
 
 		when (property.dataType) {
 			"String" -> {
-				if (value is String) {
-					val prop = property.prop as SlimeProperty<String>
-					properties.setValue(prop, value)
-				} else {
-					Skript.error("Expected a String value for property ${property.name}")
-				}
+				val prop = property.prop as SlimeProperty<String>
+				properties.setValue(prop, value.toString())
 			}
 
 			"Integer" -> {
-				if (value is Int) {
+				try {
 					val prop = property.prop as SlimeProperty<Int>
-					properties.setValue(prop, value)
-				} else {
+					properties.setValue(prop, Util.anyToInt(value))
+				} catch (e: NumberFormatException) {
 					Skript.error("Expected an Integer value for property ${property.name}")
 				}
 			}
 
 			"Float" -> {
-				if (value is Float) {
+				try {
 					val prop = property.prop as SlimeProperty<Float>
-					properties.setValue(prop, value)
-				} else {
-					Skript.error("Expected a Float value for property ${property.name}")
+					properties.setValue(prop, Util.anyToFloat(value))
+				} catch (e: NumberFormatException) {
+					Skript.error("Expected an Integer value for property ${property.name}")
 				}
 			}
 
 			"Boolean" -> {
-				if (value is Boolean) {
+				try {
 					val prop = property.prop as SlimeProperty<Boolean>
-					properties.setValue(prop, value)
-				} else {
-					Skript.error("Expected a Boolean value for property ${property.name}")
+					properties.setValue(prop, Util.anyToBoolean(value))
+				} catch (e: NumberFormatException) {
+					Skript.error("Expected an Integer value for property ${property.name}")
 				}
 			}
 
