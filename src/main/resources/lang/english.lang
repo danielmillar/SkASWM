@@ -1,0 +1,9 @@
+version: 1.0
+
+types:
+    slimeloader: slime loader¦s @a
+
+slime loaders:
+    file: file
+    mysql: mysql
+    mongodb: mongodb

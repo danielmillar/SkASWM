@@ -1,0 +1,11 @@
+name: SkASWM
+version: '${version}'
+main: me.danielmillar.skaswm.SkASWM
+api-version: '1.20'
+load: POSTWORLD
+depend:
+  - Skript
+  - SlimeWorldManager
+
+libraries:
+  - org.jetbrains.kotlin:kotlin-stdlib-jdk8:2.0.0
