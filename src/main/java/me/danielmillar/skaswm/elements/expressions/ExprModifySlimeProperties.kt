@@ -4,6 +4,7 @@ import ch.njol.skript.Skript
 import ch.njol.skript.classes.Changer
 import ch.njol.skript.doc.Description
 import ch.njol.skript.doc.Examples
+import ch.njol.skript.doc.Name
 import ch.njol.skript.doc.Since
 import ch.njol.skript.lang.Expression
 import ch.njol.skript.lang.ExpressionType
@@ -16,8 +17,9 @@ import me.danielmillar.skaswm.elements.SlimePropertiesEnum
 import me.danielmillar.skaswm.util.Util
 import org.bukkit.event.Event
 
+@Name("Change Slime Properties")
 @Description("Modify a property value of SlimePropertyMap")
-@Examples("set pvp of {_slimePropertyMap} to true")
+@Examples("set pvp of {_slimeProperty} to true", "set spawn x of _slimeProperty to 100")
 @Since("1.0.0")
 class ExprModifySlimeProperties : SimpleExpression<Any>() {
 

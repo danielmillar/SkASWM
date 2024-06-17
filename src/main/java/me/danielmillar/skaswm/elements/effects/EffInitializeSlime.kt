@@ -1,6 +1,10 @@
 package me.danielmillar.skaswm.elements.effects
 
 import ch.njol.skript.Skript
+import ch.njol.skript.doc.Description
+import ch.njol.skript.doc.Examples
+import ch.njol.skript.doc.Name
+import ch.njol.skript.doc.Since
 import ch.njol.skript.lang.Effect
 import ch.njol.skript.lang.Expression
 import ch.njol.skript.lang.SkriptParser
@@ -11,6 +15,12 @@ import me.danielmillar.skaswm.elements.SlimeLoaderTypeEnum
 import org.bukkit.Bukkit
 import org.bukkit.event.Event
 
+@Name("Initialize Slime")
+@Description("Initializes the SlimePlugin API and sets up a SlimeLoader based on the type")
+@Examples(
+	"initialize slime plugin with loader file", "initialize slime plugin with loader type file"
+)
+@Since("1.0.0")
 class EffInitializeSlime : Effect() {
 
 	companion object {

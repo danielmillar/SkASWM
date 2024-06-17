@@ -3,6 +3,7 @@ package me.danielmillar.skaswm.elements.expressions
 import ch.njol.skript.Skript
 import ch.njol.skript.doc.Description
 import ch.njol.skript.doc.Examples
+import ch.njol.skript.doc.Name
 import ch.njol.skript.doc.Since
 import ch.njol.skript.lang.Expression
 import ch.njol.skript.lang.ExpressionType
@@ -15,8 +16,12 @@ import me.danielmillar.skaswm.elements.SlimePropertiesEnum
 import me.danielmillar.skaswm.elements.effects.EffInitializeSlime.Companion.getSlimeLoader
 import org.bukkit.event.Event
 
-@Description("Create a new default SlimePropertyMap")
-@Examples("set {_slimePropertyMap} to default slime world property map")
+@Name("Create Slime Properties")
+@Description("Create a SlimePropertyMap which has default values")
+@Examples(
+	"set {_slimeProperty} to default slime world properties",
+	"set {_slimeProperty} to new slime world properties"
+)
 @Since("1.0.0")
 class ExprCreateSlimeProperties : SimpleExpression<SlimePropertyMap>() {
 
@@ -26,7 +31,7 @@ class ExprCreateSlimeProperties : SimpleExpression<SlimePropertyMap>() {
 				ExprCreateSlimeProperties::class.java,
 				SlimePropertyMap::class.java,
 				ExpressionType.SIMPLE,
-				"[default|new] slime world property map"
+				"[default|new] slime world properties"
 			)
 		}
 	}
