@@ -10,48 +10,40 @@ import ch.njol.skript.lang.Effect
 import ch.njol.skript.lang.Expression
 import ch.njol.skript.lang.SkriptParser
 import ch.njol.util.Kleenean
+import com.infernalsuite.aswm.api.exceptions.CorruptedWorldException
+import com.infernalsuite.aswm.api.exceptions.NewerFormatException
 import com.infernalsuite.aswm.api.exceptions.UnknownWorldException
-import com.infernalsuite.aswm.api.exceptions.WorldAlreadyExistsException
 import com.infernalsuite.aswm.api.exceptions.WorldLockedException
-import com.infernalsuite.aswm.api.world.properties.SlimePropertyMap
 import me.danielmillar.skaswm.SkASWM
-import me.danielmillar.skaswm.config.WorldConfig
 import me.danielmillar.skaswm.elements.effects.EffInitializeSlime.Companion.getSlimeLoader
 import me.danielmillar.skaswm.elements.effects.EffInitializeSlime.Companion.getSlimePlugin
 import me.danielmillar.skaswm.util.Util.checkWorldName
 import me.danielmillar.skaswm.util.Util.setupEvent
 import org.bukkit.Bukkit
-import org.bukkit.Location
-import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.event.Event
 import java.io.IOException
 import kotlin.system.measureTimeMillis
 
-@Name("Create Slime World")
-@Description("Create a new Slime World with a name, slime properties and whether it's readOnly")
-@Examples(
-	"create slime world with name \"Test\" with props {globalProps}",
-	"new slime world with name \"Test\" with props {globalProps} as readOnly"
-)
+@Name("Load Slime World")
+@Description("Load a new Slime World with a name")
+@Examples("load slime world with name \"Test\"")
 @Since("1.0.0")
-class EffCreateSlimeWorld : Effect() {
+class EffLoadSlimeWorld : Effect() {
 
 	companion object {
 		init {
 			Skript.registerEffect(
-				EffCreateSlimeWorld::class.java,
-				"(create|new) slime world with name %string% with props %slimepropertymap% [readonly:as ReadOnly]"
+				EffLoadSlimeWorld::class.java,
+				"load slime world with name %string%"
 			)
 		}
 	}
 
 	private lateinit var worldName: Expression<String>
-	private lateinit var slimeProperties: Expression<SlimePropertyMap>
-	private var isReadOnly = false
 
 	override fun toString(event: Event?, debug: Boolean): String {
-		return "Slime world creation"
+		return "Slime world load"
 	}
 
 	@Suppress("unchecked_cast")
@@ -62,8 +54,6 @@ class EffCreateSlimeWorld : Effect() {
 		parser: SkriptParser.ParseResult
 	): Boolean {
 		worldName = expressions[0] as Expression<String>
-		slimeProperties = expressions[1] as Expression<SlimePropertyMap>
-		isReadOnly = parser.hasTag("readonly")
 		return true
 	}
 
@@ -75,65 +65,74 @@ class EffCreateSlimeWorld : Effect() {
 
 		val worldName = checkWorldName(event, worldName, player) ?: return
 
-		val properties = slimeProperties.getSingle(event)
-		if (properties == null) {
-			player?.sendMessage("Slime properties cannot be null.")
-			Skript.error("Slime properties cannot be null.")
+		val bukkitWorld = Bukkit.getWorld(worldName)
+		if (bukkitWorld != null) {
+			player?.sendMessage("World $worldName is already loaded!")
+			Skript.error("World $worldName is already loaded!")
 			return
 		}
 
-		var bukkitWorld = Bukkit.getWorld(worldName)
-		if (bukkitWorld != null) {
-			player?.sendMessage("A world with that name already exists.")
-			Skript.error("A world with that name already exists!")
+		val worldData = SkASWM.getInstance().getConfigManager().getWorldConfig().getWorldConfig(worldName)
+		if(worldData == null){
+			player?.sendMessage("World $worldName cannot be found in config")
+			Skript.error("World $worldName cannot be found in config")
 			return
 		}
 
 		Bukkit.getScheduler().runTaskAsynchronously(SkASWM.getInstance(), Runnable AsyncTask@{
 			try {
 				val timeTaken = measureTimeMillis {
-					val slimeWorld = slimePlugin.createEmptyWorld(
+					val slimeWorld = slimePlugin.loadWorld(
 						slimeLoader,
 						worldName,
-						isReadOnly,
-						properties
+						worldData.readOnly,
+						worldData.toPropertyMap()
 					)
 
 					Bukkit.getScheduler().runTask(SkASWM.getInstance(), Runnable SyncTask@{
 						try {
 							slimePlugin.loadWorld(slimeWorld, true)
-
-							bukkitWorld = Bukkit.getWorld(worldName)
-							val location = Location(bukkitWorld, 0.0, 61.0, 0.0)
-							location.block.type = Material.BEDROCK
-
-							val worldData = WorldConfig.fromPropertyMap(properties, isReadOnly)
-							SkASWM.getInstance().getConfigManager().getWorldConfig()
-								.setWorldConfig(worldName, worldData)
-							SkASWM.getInstance().getConfigManager().saveWorldConfig()
 						} catch (ex: Exception) {
 							when (ex) {
 								is IllegalArgumentException, is WorldLockedException, is UnknownWorldException, is IOException -> {
 									player?.sendMessage("Failed to create/load world $worldName. Check console for more information!")
 									Skript.error("Failed to create/load world $worldName: ${ex.message}")
 								}
-
 								else -> throw ex
 							}
 						}
 					})
 				}
 
-				player?.sendMessage("Successfully created world $worldName within $timeTaken ms!")
-				Skript.info("Successfully created world $worldName within $timeTaken ms!")
+				player?.sendMessage("World $worldName loaded within $timeTaken ms!")
+				Skript.info("World $worldName loaded within $timeTaken ms!")
 			} catch (ex: Exception) {
 				when (ex) {
-					is WorldAlreadyExistsException -> {
-						player?.sendMessage("Failed to create world $worldName: world already exists")
-						Skript.error("Failed to create world $worldName: world already exists")
+					is CorruptedWorldException -> {
+						player?.sendMessage("Failed to load world $worldName. World seems to be corrupted")
+						Skript.error("Failed to load world $worldName. World seems to be corrupted")
+						ex.printStackTrace()
 					}
 
-					is IOException -> {
+					is NewerFormatException -> {
+						player?.sendMessage("Failed to load world $worldName. This world was serialized with a newer version of Slime Format that SWM can't understand")
+						Skript.error("Failed to load world $worldName. This world was serialized with a newer version of Slime Format that SWM can't understand")
+						ex.printStackTrace()
+					}
+
+					is UnknownWorldException -> {
+						player?.sendMessage("Failed to load world $worldName. World cannot be found")
+						Skript.error("Failed to load world $worldName. World cannot be found")
+						ex.printStackTrace()
+					}
+
+					is WorldLockedException -> {
+						player?.sendMessage("Failed to load world $worldName. World is already in use!")
+						Skript.error("Failed to load world $worldName. World is already in use!")
+						ex.printStackTrace()
+					}
+
+					is IOException, is IllegalArgumentException -> {
 						player?.sendMessage("Failed to create world $worldName. Check console for more information!")
 						Skript.error("Failed to create world $worldName. Check logger for more information")
 						ex.printStackTrace()

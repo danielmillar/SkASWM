@@ -35,6 +35,7 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
     compileOnly "com.github.SkriptLang:Skript:2.8.6"
     compileOnly "com.infernalsuite.aswm:api:1.20.4-R0.1-SNAPSHOT"
+    implementation("de.exlll:configlib-yaml:4.5.0")
 }
 
 def targetJavaVersion = 17

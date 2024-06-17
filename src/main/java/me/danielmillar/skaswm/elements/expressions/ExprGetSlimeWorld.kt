@@ -9,7 +9,8 @@ import ch.njol.skript.lang.util.SimpleExpression
 import ch.njol.util.Kleenean
 import me.danielmillar.skaswm.elements.effects.EffInitializeSlime.Companion.getSlimeLoader
 import me.danielmillar.skaswm.elements.effects.EffInitializeSlime.Companion.getSlimePlugin
-import me.danielmillar.skaswm.util.ValidationUtil.validateSlime
+import me.danielmillar.skaswm.util.Util.checkWorldName
+import me.danielmillar.skaswm.util.Util.setupEvent
 import org.bukkit.Bukkit
 import org.bukkit.World
 import org.bukkit.entity.Player
@@ -54,22 +55,12 @@ class ExprGetSlimeWorld : SimpleExpression<World>() {
 	}
 
 	override fun get(event: Event): Array<World> {
-		var player: Player? = null
-		if(event is EffectCommandEvent) player = event.sender as Player
+		val setupResult = setupEvent(event) ?: return emptyArray()
 
-		val slimePlugin = getSlimePlugin()
-		val slimeLoader = getSlimeLoader()
-		if (!validateSlime(slimePlugin, slimeLoader)) {
-			player?.sendMessage("You must initialize Slime Plugin/Loader before using anything")
-			return emptyArray()
-		}
+		val (player, slimeData) = setupResult
+		val (slimePlugin, slimeLoader) = slimeData
 
-		val worldName = worldName.getSingle(event)
-		if (worldName.isNullOrEmpty()) {
-			player?.sendMessage("The world name cannot be null.")
-			Skript.error("World name cannot be null.")
-			return emptyArray()
-		}
+		val worldName = checkWorldName(event, worldName, player) ?: return emptyArray()
 
 		val bukkitWorld = Bukkit.getWorld(worldName)
 		if(bukkitWorld == null){

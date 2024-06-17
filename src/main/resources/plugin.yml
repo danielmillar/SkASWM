@@ -12,3 +12,4 @@ depend:
 
 libraries:
   - org.jetbrains.kotlin:kotlin-stdlib-jdk8:2.0.0
+  - de.exlll:configlib-yaml:4.5.0
