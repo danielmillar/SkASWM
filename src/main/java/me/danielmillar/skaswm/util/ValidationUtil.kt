@@ -14,16 +14,4 @@ object ValidationUtil {
 		}
 		return true
 	}
-
-	fun validateInputs(slimePlugin: Any?, slimeLoader: Any?, worldName: String?, player: Player?): Boolean {
-
-		if (worldName.isNullOrEmpty()) {
-			player?.sendMessage("The world name cannot be null.")
-			Skript.error("World name cannot be null.")
-			return false
-		}
-
-		return true
-	}
-
 }
