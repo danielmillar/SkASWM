@@ -72,9 +72,6 @@ class EffUnloadSlimeWorld : Effect() {
 			return
 		}
 
-		SkASWM.getInstance().getConfigManager().getWorldConfig().updateWorldProperties(worldName, worldData, bukkitWorld)
-		SkASWM.getInstance().getConfigManager().saveWorldConfig()
-
 		val playersInWorld = bukkitWorld.players
 		if (playersInWorld.isEmpty()) {
 			Bukkit.unloadWorld(bukkitWorld, true);
@@ -93,12 +90,18 @@ class EffUnloadSlimeWorld : Effect() {
 					bukkitWorld,
 					true
 				)
+
 			if (!success) {
 				player?.sendMessage("World $worldName failed to unload")
 				Skript.info("World $worldName failed to unload")
 			} else {
-				player?.sendMessage("World $worldName failed to unload")
-				Skript.info("World $worldName failed to unload")
+				if(!worldData.readOnly){
+					SkASWM.getInstance().getConfigManager().getWorldConfig()
+						.updateWorldProperties(worldName, worldData, bukkitWorld)
+					SkASWM.getInstance().getConfigManager().saveWorldConfig()
+				}
+				player?.sendMessage("World $worldName successfully to unload")
+				Skript.info("World $worldName successfully to unload")
 			}
 		}
 	}
