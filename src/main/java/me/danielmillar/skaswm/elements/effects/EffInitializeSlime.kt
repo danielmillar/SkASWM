@@ -48,7 +48,7 @@ class EffInitializeSlime : Effect() {
 	private lateinit var loaderType: Expression<SlimeLoaderTypeEnum>
 
 	override fun toString(event: Event?, debug: Boolean): String {
-		return "initialize slime plugin with loader type ${loaderType.toString(event, debug)}"
+		return "Initialize slime plugin with loader type ${loaderType.toString(event, debug)}"
 	}
 
 	@Suppress("unchecked_cast")

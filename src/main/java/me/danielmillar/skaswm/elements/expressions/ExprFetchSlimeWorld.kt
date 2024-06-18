@@ -28,7 +28,7 @@ class ExprFetchSlimeWorld : SimpleExpression<World>() {
 	private lateinit var worldName: Expression<String>
 
 	override fun toString(event: Event?, debug: Boolean): String {
-		return "Slime world with name ${worldName.getSingle(event)}"
+		return "Fetching ${worldName.toString(event, debug)}"
 	}
 
 	@Suppress("unchecked_cast")

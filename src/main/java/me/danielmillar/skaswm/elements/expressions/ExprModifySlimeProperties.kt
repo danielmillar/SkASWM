@@ -38,7 +38,7 @@ class ExprModifySlimeProperties : SimpleExpression<Any>() {
 	private lateinit var slimePropertyType: Expression<SlimePropertiesEnum>
 
 	override fun toString(event: Event?, debug: Boolean): String {
-		return "Slime world property map value"
+		return "Update ${slimePropertyType.toString(event, debug)} of ${slimeProperties.toString(event, debug)}"
 	}
 
 	@Suppress("unchecked_cast")

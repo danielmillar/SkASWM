@@ -36,17 +36,17 @@ class Worlds {
 
 		val tempGameRules: MutableMap<String, String> = hashMapOf()
 		GameRuleEnum.entries.forEach {
-			when(it.dataType){
+			when (it.dataType) {
 				"Boolean" -> {
 					val value = world.getGameRuleValue(it.gameRule)
-					if(value != world.getGameRuleDefault(it.gameRule)){
+					if (value != world.getGameRuleDefault(it.gameRule)) {
 						tempGameRules[it.name] = value.toString()
 					}
 				}
 
 				"Integer" -> {
 					val value = world.getGameRuleValue(it.gameRule)
-					if(value != world.getGameRuleDefault(it.gameRule)){
+					if (value != world.getGameRuleDefault(it.gameRule)) {
 						tempGameRules[it.name] = value.toString()
 					}
 				}
@@ -63,7 +63,7 @@ class Worlds {
 
 		for (gameRule in gameRules) {
 			val gameRuleEnum = GameRuleEnum.valueOf(gameRule.key)
-			when(gameRuleEnum.dataType){
+			when (gameRuleEnum.dataType) {
 				"Boolean" -> {
 					val prop = gameRuleEnum.gameRule as GameRule<Boolean>
 					val convertedValue = gameRule.value.let { Util.anyToBoolean(it) } ?: run {

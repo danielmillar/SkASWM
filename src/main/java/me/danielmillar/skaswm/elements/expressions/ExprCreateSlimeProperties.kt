@@ -36,7 +36,7 @@ class ExprCreateSlimeProperties : SimpleExpression<SlimePropertyMap>() {
 	}
 
 	override fun toString(event: Event?, debug: Boolean): String {
-		return "Slime world property map"
+		return "Create Slime Properties Map"
 	}
 
 	override fun init(

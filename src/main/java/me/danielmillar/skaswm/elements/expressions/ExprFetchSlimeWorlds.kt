@@ -32,7 +32,7 @@ class ExprFetchSlimeWorlds : SimpleExpression<String>() {
 	}
 
 	override fun toString(event: Event?, debug: Boolean): String {
-		return "list of slimeworlds"
+		return "Fetching all slime worlds"
 	}
 
 	override fun init(
@@ -57,6 +57,7 @@ class ExprFetchSlimeWorlds : SimpleExpression<String>() {
 
 		val (_, slimeData) = setupResult
 		val (_, slimeLoader) = slimeData
-		return slimeLoader.listWorlds().filter { SkASWM.getInstance().getConfigManager().getWorldConfig().hasWorldConfig(it) }.toTypedArray()
+		return slimeLoader.listWorlds()
+			.filter { SkASWM.getInstance().getConfigManager().getWorldConfig().hasWorldConfig(it) }.toTypedArray()
 	}
 }

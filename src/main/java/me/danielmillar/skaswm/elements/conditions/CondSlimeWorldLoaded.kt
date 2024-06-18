@@ -14,18 +14,26 @@ class CondSlimeWorldLoaded : Condition() {
 
 	companion object {
 		init {
-			Skript.registerCondition(CondSlimeWorldLoaded::class.java, "slime world named %string% (1¦is|2¦is(n't| not)) loaded")
+			Skript.registerCondition(
+				CondSlimeWorldLoaded::class.java,
+				"slime world named %string% (1¦is|2¦is(n't| not)) loaded"
+			)
 		}
 	}
 
 	private lateinit var worldName: Expression<String>
 
 	override fun toString(event: Event?, debug: Boolean): String {
-		return "Slime world loaded: ${worldName.toString(event, debug)}"
+		return "${worldName.toString(event, debug)} ${if (isNegated) " is" else " isn't"} loaded"
 	}
 
 	@Suppress("unchecked_cast")
-	override fun init(expressions: Array<out Expression<*>>, matchedPattern: Int, isDelayed: Kleenean, parser: SkriptParser.ParseResult): Boolean {
+	override fun init(
+		expressions: Array<out Expression<*>>,
+		matchedPattern: Int,
+		isDelayed: Kleenean,
+		parser: SkriptParser.ParseResult
+	): Boolean {
 		worldName = expressions[0] as Expression<String>
 		isNegated = parser.mark == 1
 		return true
@@ -38,6 +46,6 @@ class CondSlimeWorldLoaded : Condition() {
 		val worldName = checkWorldName(event, worldName, player) ?: return false
 		val bukkitWorld = Bukkit.getWorld(worldName)
 
-		return if(bukkitWorld != null) isNegated else !isNegated
+		return if (bukkitWorld != null) isNegated else !isNegated
 	}
 }

@@ -35,7 +35,7 @@ class EffUnloadSlimeWorld : Effect() {
 	private lateinit var worldName: Expression<String>
 
 	override fun toString(event: Event?, debug: Boolean): String {
-		return "Slime world unload"
+		return "Unload slime world ${worldName.toString(event, debug)}"
 	}
 
 	@Suppress("unchecked_cast")

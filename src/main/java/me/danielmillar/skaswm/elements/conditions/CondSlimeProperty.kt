@@ -7,19 +7,18 @@ import ch.njol.skript.lang.SkriptParser
 import ch.njol.util.Kleenean
 import com.infernalsuite.aswm.api.world.properties.SlimeProperty
 import com.infernalsuite.aswm.api.world.properties.SlimePropertyMap
-import me.danielmillar.skaswm.SkASWM
 import me.danielmillar.skaswm.elements.SlimePropertiesEnum
-import me.danielmillar.skaswm.util.Util
-import me.danielmillar.skaswm.util.Util.checkWorldName
 import me.danielmillar.skaswm.util.Util.setupEvent
-import org.bukkit.Bukkit
 import org.bukkit.event.Event
 
 class CondSlimeProperty : Condition() {
 
 	companion object {
 		init {
-			Skript.registerCondition(CondSlimeProperty::class.java, "%slimeproperty% of %slimepropertymap% (1¦is|2¦is(n't| not)) %boolean/integer%")
+			Skript.registerCondition(
+				CondSlimeProperty::class.java,
+				"%slimeproperty% of %slimepropertymap% (1¦is|2¦is(n't| not)) %boolean/integer%"
+			)
 		}
 	}
 
@@ -28,11 +27,21 @@ class CondSlimeProperty : Condition() {
 	private lateinit var value: Expression<*>
 
 	override fun toString(event: Event?, debug: Boolean): String {
-		return "Slime world property"
+		return "${slimeProperties.toString(event, debug)} ${if (isNegated) " is" else " isn't"} ${
+			value.toString(
+				event,
+				debug
+			)
+		}"
 	}
 
 	@Suppress("unchecked_cast")
-	override fun init(expressions: Array<out Expression<*>>, matchedPattern: Int, isDelayed: Kleenean, parser: SkriptParser.ParseResult): Boolean {
+	override fun init(
+		expressions: Array<out Expression<*>>,
+		matchedPattern: Int,
+		isDelayed: Kleenean,
+		parser: SkriptParser.ParseResult
+	): Boolean {
 		slimePropertyType = expressions[0] as Expression<SlimePropertiesEnum>
 		slimeProperties = expressions[1] as Expression<SlimePropertyMap>
 		value = expressions[2]
@@ -62,25 +71,25 @@ class CondSlimeProperty : Condition() {
 			return false
 		}
 
-		return when(property.dataType){
+		return when (property.dataType) {
 			"String" -> {
 				val prop = property.prop as SlimeProperty<String>
-				if(properties.getValue(prop).equals(value)) isNegated else !isNegated
+				if (properties.getValue(prop).equals(value)) isNegated else !isNegated
 			}
 
 			"Integer" -> {
 				val prop = property.prop as SlimeProperty<Int>
-				if(properties.getValue(prop).equals(value)) isNegated else !isNegated
+				if (properties.getValue(prop).equals(value)) isNegated else !isNegated
 			}
 
 			"Float" -> {
 				val prop = property.prop as SlimeProperty<Float>
-				if(properties.getValue(prop).equals(value)) isNegated else !isNegated
+				if (properties.getValue(prop).equals(value)) isNegated else !isNegated
 			}
 
 			"Boolean" -> {
 				val prop = property.prop as SlimeProperty<Boolean>
-				if(properties.getValue(prop).equals(value)) isNegated else !isNegated
+				if (properties.getValue(prop).equals(value)) isNegated else !isNegated
 			}
 
 			else -> {

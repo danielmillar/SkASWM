@@ -45,7 +45,12 @@ class EffCreateSlimeWorld : Effect() {
 	private var isReadOnly = false
 
 	override fun toString(event: Event?, debug: Boolean): String {
-		return "Slime world creation"
+		return "Create slime world ${worldName.toString(event, debug)} with properties ${
+			slimeProperties.toString(
+				event,
+				debug
+			)
+		} ${if (isReadOnly) "as readOnly" else ""}"
 	}
 
 	@Suppress("unchecked_cast")
