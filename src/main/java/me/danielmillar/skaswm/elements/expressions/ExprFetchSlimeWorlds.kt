@@ -10,6 +10,7 @@ import ch.njol.skript.lang.ExpressionType
 import ch.njol.skript.lang.SkriptParser
 import ch.njol.skript.lang.util.SimpleExpression
 import ch.njol.util.Kleenean
+import me.danielmillar.skaswm.SkASWM
 import me.danielmillar.skaswm.util.Util.setupEvent
 import org.bukkit.event.Event
 
@@ -56,7 +57,6 @@ class ExprFetchSlimeWorlds : SimpleExpression<String>() {
 
 		val (_, slimeData) = setupResult
 		val (_, slimeLoader) = slimeData
-
-		return slimeLoader.listWorlds().toTypedArray()
+		return slimeLoader.listWorlds().filter { SkASWM.getInstance().getConfigManager().getWorldConfig().hasWorldConfig(it) }.toTypedArray()
 	}
 }
