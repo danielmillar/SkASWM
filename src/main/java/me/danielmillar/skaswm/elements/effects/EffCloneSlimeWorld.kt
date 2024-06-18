@@ -9,11 +9,7 @@ import ch.njol.skript.lang.Effect
 import ch.njol.skript.lang.Expression
 import ch.njol.skript.lang.SkriptParser
 import ch.njol.util.Kleenean
-import com.infernalsuite.aswm.api.exceptions.CorruptedWorldException
-import com.infernalsuite.aswm.api.exceptions.NewerFormatException
-import com.infernalsuite.aswm.api.exceptions.UnknownWorldException
-import com.infernalsuite.aswm.api.exceptions.WorldAlreadyExistsException
-import com.infernalsuite.aswm.api.exceptions.WorldLockedException
+import com.infernalsuite.aswm.api.exceptions.*
 import me.danielmillar.skaswm.SkASWM
 import me.danielmillar.skaswm.util.Util.checkWorldName
 import me.danielmillar.skaswm.util.Util.setupEvent
@@ -41,7 +37,7 @@ class EffCloneSlimeWorld : Effect() {
 	private lateinit var clonedWorldName: Expression<String>
 
 	override fun toString(event: Event?, debug: Boolean): String {
-		return "Slime world load"
+		return "Slime world clonne"
 	}
 
 	@Suppress("unchecked_cast")
@@ -65,7 +61,7 @@ class EffCloneSlimeWorld : Effect() {
 		val baseWorldName = checkWorldName(event, baseWorldName, player) ?: return
 		val cloneWorldName = checkWorldName(event, clonedWorldName, player) ?: return
 
-		if(baseWorldName == cloneWorldName){
+		if (baseWorldName == cloneWorldName) {
 			player?.sendMessage("Template world name cannot be the same one as the cloned world name!")
 			Skript.error("Template world name cannot be the same one as the cloned world name!")
 			return
