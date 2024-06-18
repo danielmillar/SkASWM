@@ -10,7 +10,6 @@ import java.io.IOException
 import java.nio.file.Path
 import java.util.logging.Level
 
-
 class SkASWM : JavaPlugin() {
 
     companion object {
