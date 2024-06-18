@@ -13,7 +13,6 @@ import ch.njol.util.Kleenean
 import com.infernalsuite.aswm.api.world.properties.SlimeProperty
 import com.infernalsuite.aswm.api.world.properties.SlimePropertyMap
 import me.danielmillar.skaswm.elements.SlimePropertiesEnum
-import me.danielmillar.skaswm.elements.effects.EffInitializeSlime.Companion.getSlimeLoader
 import org.bukkit.event.Event
 
 @Name("Create Slime Properties")

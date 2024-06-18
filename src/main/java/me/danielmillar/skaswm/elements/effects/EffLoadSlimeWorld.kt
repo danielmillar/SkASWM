@@ -1,7 +1,6 @@
 package me.danielmillar.skaswm.elements.effects
 
 import ch.njol.skript.Skript
-import ch.njol.skript.command.EffectCommandEvent
 import ch.njol.skript.doc.Description
 import ch.njol.skript.doc.Examples
 import ch.njol.skript.doc.Name
@@ -15,12 +14,9 @@ import com.infernalsuite.aswm.api.exceptions.NewerFormatException
 import com.infernalsuite.aswm.api.exceptions.UnknownWorldException
 import com.infernalsuite.aswm.api.exceptions.WorldLockedException
 import me.danielmillar.skaswm.SkASWM
-import me.danielmillar.skaswm.elements.effects.EffInitializeSlime.Companion.getSlimeLoader
-import me.danielmillar.skaswm.elements.effects.EffInitializeSlime.Companion.getSlimePlugin
 import me.danielmillar.skaswm.util.Util.checkWorldName
 import me.danielmillar.skaswm.util.Util.setupEvent
 import org.bukkit.Bukkit
-import org.bukkit.entity.Player
 import org.bukkit.event.Event
 import java.io.IOException
 import kotlin.system.measureTimeMillis
@@ -73,7 +69,7 @@ class EffLoadSlimeWorld : Effect() {
 		}
 
 		val worldData = SkASWM.getInstance().getConfigManager().getWorldConfig().getWorldConfig(worldName)
-		if(worldData == null){
+		if (worldData == null) {
 			player?.sendMessage("World $worldName cannot be found in config")
 			Skript.error("World $worldName cannot be found in config")
 			return
@@ -95,7 +91,8 @@ class EffLoadSlimeWorld : Effect() {
 							bukkitWorld = Bukkit.getWorld(worldName)
 
 							bukkitWorld?.let {
-								SkASWM.getInstance().getConfigManager().getWorldConfig().setWorldProperties(worldData,
+								SkASWM.getInstance().getConfigManager().getWorldConfig().setWorldProperties(
+									worldData,
 									it
 								)
 							}
@@ -105,6 +102,7 @@ class EffLoadSlimeWorld : Effect() {
 									player?.sendMessage("Failed to create/load world $worldName. Check console for more information!")
 									Skript.error("Failed to create/load world $worldName: ${ex.message}")
 								}
+
 								else -> throw ex
 							}
 						}

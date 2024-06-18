@@ -95,7 +95,7 @@ class EffUnloadSlimeWorld : Effect() {
 				player?.sendMessage("World $worldName failed to unload")
 				Skript.info("World $worldName failed to unload")
 			} else {
-				if(!worldData.readOnly){
+				if (!worldData.readOnly) {
 					SkASWM.getInstance().getConfigManager().getWorldConfig()
 						.updateWorldProperties(worldName, worldData, bukkitWorld)
 					SkASWM.getInstance().getConfigManager().saveWorldConfig()

@@ -68,7 +68,7 @@ class EffSaveSlimeWorld : Effect() {
 			return
 		}
 
-		if(worldData.readOnly){
+		if (worldData.readOnly) {
 			player?.sendMessage("World $worldName readOnly property is true, can't save")
 			Skript.warning("World $worldName readOnly property is true, can't save")
 			return

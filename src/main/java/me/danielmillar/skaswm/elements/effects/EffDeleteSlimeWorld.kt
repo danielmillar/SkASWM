@@ -14,12 +14,8 @@ import me.danielmillar.skaswm.SkASWM
 import me.danielmillar.skaswm.util.Util.checkWorldName
 import me.danielmillar.skaswm.util.Util.setupEvent
 import org.bukkit.Bukkit
-import org.bukkit.Location
-import org.bukkit.Material
-import org.bukkit.block.BlockFace
 import org.bukkit.event.Event
 import java.io.IOException
-import java.util.concurrent.CompletableFuture
 import kotlin.system.measureTimeMillis
 
 @Name("Delete Slime World")
@@ -62,7 +58,7 @@ class EffDeleteSlimeWorld : Effect() {
 
 		val worldName = checkWorldName(event, worldName, player) ?: return
 
-		if(!SkASWM.getInstance().getConfigManager().getWorldConfig().hasWorldConfig(worldName)){
+		if (!SkASWM.getInstance().getConfigManager().getWorldConfig().hasWorldConfig(worldName)) {
 			player?.sendMessage("Can't find world $worldName is config!")
 			player?.sendMessage("Can't find world $worldName is config!")
 			return
@@ -87,7 +83,7 @@ class EffDeleteSlimeWorld : Effect() {
 				player?.sendMessage("Successfully deleted world $worldName within $timeTaken ms!")
 				Skript.info("Successfully deleted world $worldName within $timeTaken ms!")
 			} catch (ex: Exception) {
-				when(ex){
+				when (ex) {
 					is IOException -> {
 						player?.sendMessage("Failed to delete world $worldName. Check console for more information!")
 						Skript.error("Failed to delete world $worldName. Check logger for more information")

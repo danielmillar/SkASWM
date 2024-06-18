@@ -1,7 +1,6 @@
 package me.danielmillar.skaswm.elements.effects
 
 import ch.njol.skript.Skript
-import ch.njol.skript.command.EffectCommandEvent
 import ch.njol.skript.doc.Description
 import ch.njol.skript.doc.Examples
 import ch.njol.skript.doc.Name
@@ -16,14 +15,11 @@ import com.infernalsuite.aswm.api.exceptions.WorldLockedException
 import com.infernalsuite.aswm.api.world.properties.SlimePropertyMap
 import me.danielmillar.skaswm.SkASWM
 import me.danielmillar.skaswm.config.WorldConfig
-import me.danielmillar.skaswm.elements.effects.EffInitializeSlime.Companion.getSlimeLoader
-import me.danielmillar.skaswm.elements.effects.EffInitializeSlime.Companion.getSlimePlugin
 import me.danielmillar.skaswm.util.Util.checkWorldName
 import me.danielmillar.skaswm.util.Util.setupEvent
 import org.bukkit.Bukkit
 import org.bukkit.Location
 import org.bukkit.Material
-import org.bukkit.entity.Player
 import org.bukkit.event.Event
 import java.io.IOException
 import kotlin.system.measureTimeMillis

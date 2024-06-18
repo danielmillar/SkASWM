@@ -58,7 +58,7 @@ class ExprFetchSlimeWorld : SimpleExpression<World>() {
 		val worldName = checkWorldName(event, worldName, player) ?: return emptyArray()
 
 		val bukkitWorld = Bukkit.getWorld(worldName)
-		if(bukkitWorld == null){
+		if (bukkitWorld == null) {
 			player?.sendMessage("World $worldName cannot be found, perhaps it doesn't exist or you didn't load it")
 			Skript.error("World $worldName cannot be found, perhaps it doesn't exist or you didn't load it")
 			return emptyArray()

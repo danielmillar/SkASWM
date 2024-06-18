@@ -2,10 +2,8 @@ package me.danielmillar.skaswm.config
 
 import de.exlll.configlib.YamlConfigurationProperties
 import de.exlll.configlib.YamlConfigurationStore
-import me.danielmillar.skaswm.SkASWM
 import java.nio.file.Path
 import kotlin.io.path.exists
-
 
 class ConfigManager(private val configPath: Path) {
 
