@@ -11,11 +11,9 @@ import ch.njol.skript.lang.SkriptParser
 import ch.njol.util.Kleenean
 import me.danielmillar.skaswm.SkASWM
 import me.danielmillar.skaswm.util.Util.checkWorldName
+import me.danielmillar.skaswm.util.Util.findValidDefaultSpawn
 import me.danielmillar.skaswm.util.Util.setupEvent
 import org.bukkit.Bukkit
-import org.bukkit.Location
-import org.bukkit.Material
-import org.bukkit.block.BlockFace
 import org.bukkit.event.Event
 import java.util.concurrent.CompletableFuture
 
@@ -104,21 +102,5 @@ class EffUnloadSlimeWorld : Effect() {
 				Skript.info("World $worldName successfully to unload")
 			}
 		}
-	}
-
-	private fun findValidDefaultSpawn(): Location {
-		val defaultWorld = Bukkit.getWorlds()[0]
-		val spawnLocation = defaultWorld.spawnLocation
-
-		spawnLocation.y = 64.0
-		while (spawnLocation.block.type != Material.AIR || spawnLocation.block.getRelative(BlockFace.UP).type != Material.AIR) {
-			if (spawnLocation.y >= 320) {
-				spawnLocation.add(0.0, 1.0, 0.0)
-				break
-			}
-
-			spawnLocation.add(0.0, 1.0, 0.0)
-		}
-		return spawnLocation
 	}
 }
