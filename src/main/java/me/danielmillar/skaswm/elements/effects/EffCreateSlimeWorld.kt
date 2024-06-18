@@ -99,10 +99,6 @@ class EffCreateSlimeWorld : Effect() {
 						try {
 							slimePlugin.loadWorld(slimeWorld, true)
 
-							bukkitWorld = Bukkit.getWorld(worldName)
-							val location = Location(bukkitWorld, 0.0, 61.0, 0.0)
-							location.block.type = Material.BEDROCK
-
 							val worldData = WorldConfig.fromPropertyMap(properties, isReadOnly)
 							SkASWM.getInstance().getConfigManager().getWorldConfig()
 								.setWorldConfig(worldName, worldData)
