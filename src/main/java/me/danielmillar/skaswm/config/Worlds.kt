@@ -1,6 +1,7 @@
 package me.danielmillar.skaswm.config
 
 import de.exlll.configlib.Configuration
+import org.bukkit.World
 
 @Configuration
 class Worlds {
@@ -28,5 +29,14 @@ class Worlds {
 
 	fun hasWorldConfig(name: String): Boolean {
 		return worlds.containsKey(name)
+	}
+
+	fun updateWorldProperties(name: String, worldConfig: WorldConfig, world: World) {
+		worldConfig.difficulty = world.difficulty.name.lowercase()
+		worldConfig.allowMonsters = world.allowMonsters
+		worldConfig.allowAnimals = world.allowAnimals
+		worldConfig.pvp = world.pvp
+
+		setWorldConfig(name, worldConfig)
 	}
 }
