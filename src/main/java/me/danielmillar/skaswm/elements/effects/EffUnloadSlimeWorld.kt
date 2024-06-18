@@ -80,8 +80,6 @@ class EffUnloadSlimeWorld : Effect() {
 			return
 		}
 
-		println("Players in world")
-
 		val spawnLocation = findValidDefaultSpawn()
 		val futures = playersInWorld.map { it.teleportAsync(spawnLocation) }
 		val allOfFuture = CompletableFuture.allOf(*futures.toTypedArray())
