@@ -79,7 +79,7 @@ class EffUnloadSlimeWorld : Effect() {
 		if (playersInWorld.isEmpty()) {
 			Bukkit.unloadWorld(bukkitWorld, true);
 			player?.sendMessage("World $worldName unloaded successfully")
-			Skript.error("World $worldName unloaded successfully")
+			Skript.info("World $worldName unloaded successfully")
 			return
 		}
 
