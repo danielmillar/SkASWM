@@ -27,6 +27,8 @@ class WorldConfig {
 
 	var readOnly: Boolean = false
 
+	var gamerules: MutableMap<String, String> = hashMapOf()
+
 	fun toPropertyMap(): SlimePropertyMap {
 		try {
 			enumValueOf<Difficulty>(difficulty.uppercase(Locale.getDefault()))

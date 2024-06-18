@@ -65,7 +65,7 @@ class EffLoadSlimeWorld : Effect() {
 
 		val worldName = checkWorldName(event, worldName, player) ?: return
 
-		val bukkitWorld = Bukkit.getWorld(worldName)
+		var bukkitWorld = Bukkit.getWorld(worldName)
 		if (bukkitWorld != null) {
 			player?.sendMessage("World $worldName is already loaded!")
 			Skript.error("World $worldName is already loaded!")
@@ -92,6 +92,13 @@ class EffLoadSlimeWorld : Effect() {
 					Bukkit.getScheduler().runTask(SkASWM.getInstance(), Runnable SyncTask@{
 						try {
 							slimePlugin.loadWorld(slimeWorld, true)
+							bukkitWorld = Bukkit.getWorld(worldName)
+
+							bukkitWorld?.let {
+								SkASWM.getInstance().getConfigManager().getWorldConfig().setWorldProperties(worldData,
+									it
+								)
+							}
 						} catch (ex: Exception) {
 							when (ex) {
 								is IllegalArgumentException, is WorldLockedException, is UnknownWorldException, is IOException -> {
