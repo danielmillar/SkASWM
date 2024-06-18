@@ -7,6 +7,10 @@ import com.infernalsuite.aswm.api.SlimePlugin
 import com.infernalsuite.aswm.api.loaders.SlimeLoader
 import me.danielmillar.skaswm.elements.effects.EffInitializeSlime.Companion.getSlimeLoader
 import me.danielmillar.skaswm.elements.effects.EffInitializeSlime.Companion.getSlimePlugin
+import org.bukkit.Bukkit
+import org.bukkit.Location
+import org.bukkit.Material
+import org.bukkit.block.BlockFace
 import org.bukkit.entity.Player
 import org.bukkit.event.Event
 
@@ -69,6 +73,22 @@ object Util {
 
 			else -> null
 		}
+	}
+
+	fun findValidDefaultSpawn(): Location {
+		val defaultWorld = Bukkit.getWorlds()[0]
+		val spawnLocation = defaultWorld.spawnLocation
+
+		spawnLocation.y = 64.0
+		while (spawnLocation.block.type != Material.AIR || spawnLocation.block.getRelative(BlockFace.UP).type != Material.AIR) {
+			if (spawnLocation.y >= 320) {
+				spawnLocation.add(0.0, 1.0, 0.0)
+				break
+			}
+
+			spawnLocation.add(0.0, 1.0, 0.0)
+		}
+		return spawnLocation
 	}
 
 	fun setupEvent(event: Event): Pair<Player?, Pair<SlimePlugin, SlimeLoader>>? {

@@ -37,7 +37,7 @@ class EffCloneSlimeWorld : Effect() {
 	private lateinit var clonedWorldName: Expression<String>
 
 	override fun toString(event: Event?, debug: Boolean): String {
-		return "Slime world clonne"
+		return "Slime world clone"
 	}
 
 	@Suppress("unchecked_cast")

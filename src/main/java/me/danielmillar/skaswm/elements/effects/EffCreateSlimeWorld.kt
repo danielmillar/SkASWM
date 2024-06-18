@@ -18,8 +18,6 @@ import me.danielmillar.skaswm.config.WorldConfig
 import me.danielmillar.skaswm.util.Util.checkWorldName
 import me.danielmillar.skaswm.util.Util.setupEvent
 import org.bukkit.Bukkit
-import org.bukkit.Location
-import org.bukkit.Material
 import org.bukkit.event.Event
 import java.io.IOException
 import kotlin.system.measureTimeMillis
@@ -78,10 +76,17 @@ class EffCreateSlimeWorld : Effect() {
 			return
 		}
 
-		var bukkitWorld = Bukkit.getWorld(worldName)
+		val bukkitWorld = Bukkit.getWorld(worldName)
 		if (bukkitWorld != null) {
 			player?.sendMessage("A world with that name already exists.")
 			Skript.error("A world with that name already exists!")
+			return
+		}
+
+		val worldDataExists = SkASWM.getInstance().getConfigManager().getWorldConfig().hasWorldConfig(worldName)
+		if (worldDataExists) {
+			player?.sendMessage("World $worldName already exists in config")
+			Skript.error("World $worldName already exists in config")
 			return
 		}
 
