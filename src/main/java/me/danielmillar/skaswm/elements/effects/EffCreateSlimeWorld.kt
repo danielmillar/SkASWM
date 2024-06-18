@@ -31,8 +31,8 @@ import kotlin.system.measureTimeMillis
 @Name("Create Slime World")
 @Description("Create a new Slime World with a name, slime properties and whether it's readOnly")
 @Examples(
-	"create slime world with name \"Test\" with props {globalProps}",
-	"new slime world with name \"Test\" with props {globalProps} as readOnly"
+	"create slime world named \"Test\" with props {globalProps}",
+	"new slime world named \"Test\" with props {globalProps} as readOnly"
 )
 @Since("1.0.0")
 class EffCreateSlimeWorld : Effect() {
@@ -41,7 +41,7 @@ class EffCreateSlimeWorld : Effect() {
 		init {
 			Skript.registerEffect(
 				EffCreateSlimeWorld::class.java,
-				"(create|new) slime world with name %string% with props %slimepropertymap% [readonly:as ReadOnly]"
+				"(create|new) (slimeworld|slime world) named %string% with props %slimepropertymap% [readonly:as ReadOnly]"
 			)
 		}
 	}

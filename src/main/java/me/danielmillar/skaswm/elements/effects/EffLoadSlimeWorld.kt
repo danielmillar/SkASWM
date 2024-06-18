@@ -27,7 +27,7 @@ import kotlin.system.measureTimeMillis
 
 @Name("Load Slime World")
 @Description("Load a new Slime World with a name")
-@Examples("load slime world with name \"Test\"")
+@Examples("load slime world named \"Test\"")
 @Since("1.0.0")
 class EffLoadSlimeWorld : Effect() {
 
@@ -35,7 +35,7 @@ class EffLoadSlimeWorld : Effect() {
 		init {
 			Skript.registerEffect(
 				EffLoadSlimeWorld::class.java,
-				"load slime world with name %string%"
+				"load (slimeworld|slime world) named %string%"
 			)
 		}
 	}

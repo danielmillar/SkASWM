@@ -1,30 +1,26 @@
 package me.danielmillar.skaswm.elements.expressions
 
 import ch.njol.skript.Skript
-import ch.njol.skript.command.EffectCommandEvent
 import ch.njol.skript.lang.Expression
 import ch.njol.skript.lang.ExpressionType
 import ch.njol.skript.lang.SkriptParser
 import ch.njol.skript.lang.util.SimpleExpression
 import ch.njol.util.Kleenean
-import me.danielmillar.skaswm.elements.effects.EffInitializeSlime.Companion.getSlimeLoader
-import me.danielmillar.skaswm.elements.effects.EffInitializeSlime.Companion.getSlimePlugin
 import me.danielmillar.skaswm.util.Util.checkWorldName
 import me.danielmillar.skaswm.util.Util.setupEvent
 import org.bukkit.Bukkit
 import org.bukkit.World
-import org.bukkit.entity.Player
 import org.bukkit.event.Event
 
-class ExprGetSlimeWorld : SimpleExpression<World>() {
+class ExprFetchSlimeWorld : SimpleExpression<World>() {
 
 	companion object {
 		init {
 			Skript.registerExpression(
-				ExprGetSlimeWorld::class.java,
+				ExprFetchSlimeWorld::class.java,
 				World::class.java,
 				ExpressionType.COMBINED,
-				"[get] slime world with name %string%"
+				"fetch (slimeworld|slime world) named %string%"
 			)
 		}
 	}
@@ -57,8 +53,7 @@ class ExprGetSlimeWorld : SimpleExpression<World>() {
 	override fun get(event: Event): Array<World> {
 		val setupResult = setupEvent(event) ?: return emptyArray()
 
-		val (player, slimeData) = setupResult
-		val (slimePlugin, slimeLoader) = slimeData
+		val (player) = setupResult
 
 		val worldName = checkWorldName(event, worldName, player) ?: return emptyArray()
 
