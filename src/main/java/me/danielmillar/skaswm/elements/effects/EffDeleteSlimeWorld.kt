@@ -54,13 +54,13 @@ class EffDeleteSlimeWorld : Effect() {
 		val setupResult = setupEvent(event) ?: return
 
 		val (player, slimeData) = setupResult
-		val (slimePlugin, slimeLoader) = slimeData
+		val (_, slimeLoader) = slimeData
 
 		val worldName = checkWorldName(event, worldName, player) ?: return
 
 		if (!SkASWM.getInstance().getConfigManager().getWorldConfig().hasWorldConfig(worldName)) {
 			player?.sendMessage("Can't find world $worldName is config!")
-			player?.sendMessage("Can't find world $worldName is config!")
+			Skript.error("Can't find world $worldName is config!")
 			return
 		}
 
@@ -91,7 +91,7 @@ class EffDeleteSlimeWorld : Effect() {
 
 					is UnknownWorldException -> {
 						player?.sendMessage("Datasource doesn't contain any world called $worldName")
-						player?.sendMessage("Datasource doesn't contain any world called $worldName")
+						Skript.error("Datasource doesn't contain any world called $worldName")
 					}
 				}
 			}
