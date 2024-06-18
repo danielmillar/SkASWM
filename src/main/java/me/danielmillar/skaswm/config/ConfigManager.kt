@@ -17,10 +17,6 @@ class ConfigManager(private val configPath: Path) {
 		worldConfig = configStore.load(configPath)
 	}
 
-	fun getStore(): YamlConfigurationStore<Worlds> {
-		return configStore
-	}
-
 	fun getWorldConfig(): Worlds {
 		return worldConfig
 	}

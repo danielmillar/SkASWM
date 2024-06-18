@@ -11,14 +11,6 @@ import org.bukkit.World
 class Worlds {
 	private var worlds: MutableMap<String, WorldConfig> = hashMapOf()
 
-	fun getWorlds(): Map<String, WorldConfig> {
-		return worlds.toMap()
-	}
-
-	fun setWorlds(worlds: Map<String, WorldConfig>) {
-		this.worlds = worlds.toMutableMap()
-	}
-
 	fun getWorldConfig(name: String): WorldConfig? {
 		return worlds[name]
 	}
@@ -46,7 +38,6 @@ class Worlds {
 		GameRuleEnum.entries.forEach {
 			when(it.dataType){
 				"Boolean" -> {
-					val prop = it.gameRule as GameRule<Boolean>
 					val value = world.getGameRuleValue(it.gameRule)
 					if(value != world.getGameRuleDefault(it.gameRule)){
 						tempGameRules[it.name] = value.toString()
@@ -54,7 +45,6 @@ class Worlds {
 				}
 
 				"Integer" -> {
-					val prop = it.gameRule as GameRule<Int>
 					val value = world.getGameRuleValue(it.gameRule)
 					if(value != world.getGameRuleDefault(it.gameRule)){
 						tempGameRules[it.name] = value.toString()
