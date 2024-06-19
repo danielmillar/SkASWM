@@ -1,6 +1,10 @@
 package me.danielmillar.skaswm.elements.expressions
 
 import ch.njol.skript.Skript
+import ch.njol.skript.doc.Description
+import ch.njol.skript.doc.Examples
+import ch.njol.skript.doc.Name
+import ch.njol.skript.doc.Since
 import ch.njol.skript.lang.Expression
 import ch.njol.skript.lang.ExpressionType
 import ch.njol.skript.lang.SkriptParser
@@ -12,6 +16,10 @@ import org.bukkit.Bukkit
 import org.bukkit.World
 import org.bukkit.event.Event
 
+@Name("Fetch Slime World")
+@Description("Fetch slime world from name")
+@Examples("set {_slimeWorld} to fetch slime world named \"Test\"")
+@Since("1.0.0")
 class ExprFetchSlimeWorld : SimpleExpression<World>() {
 
 	companion object {

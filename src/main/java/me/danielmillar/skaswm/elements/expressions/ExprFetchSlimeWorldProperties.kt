@@ -14,29 +14,31 @@ import com.infernalsuite.aswm.api.world.properties.SlimePropertyMap
 import me.danielmillar.skaswm.SkASWM
 import me.danielmillar.skaswm.util.Util.checkWorldName
 import me.danielmillar.skaswm.util.Util.setupEvent
+import org.bukkit.World
 import org.bukkit.event.Event
+import sun.awt.geom.Crossings.debug
 
-@Name("Fetch slime properties")
-@Description("Fetch slime properties using name")
-@Examples("set {_slimeProps} to fetch props of slime world named \"Test\"")
+@Name("Fetch slime world properties")
+@Description("Fetch slime properties using world")
+@Examples("set {_slimeProps} to fetch props of {_world}")
 @Since("1.0.0")
-class ExprFetchSlimeProperties : SimpleExpression<SlimePropertyMap>() {
+class ExprFetchSlimeWorldProperties : SimpleExpression<SlimePropertyMap>() {
 
 	companion object {
 		init {
 			Skript.registerExpression(
-				ExprFetchSlimeProperties::class.java,
+				ExprFetchSlimeWorldProperties::class.java,
 				SlimePropertyMap::class.java,
 				ExpressionType.COMBINED,
-				"fetch (properties|props) of (slimeworld|slime world) named %string%"
+				"fetch (properties|props) of %world%"
 			)
 		}
 	}
 
-	private lateinit var worldName: Expression<String>
+	private lateinit var worldExpr: Expression<World>
 
 	override fun toString(event: Event?, debug: Boolean): String {
-		return "Fetching properties of ${worldName.toString(event, debug)}"
+		return "Fetching properties of ${worldExpr.toString(event, debug)}"
 	}
 
 	@Suppress("unchecked_cast")
@@ -46,7 +48,7 @@ class ExprFetchSlimeProperties : SimpleExpression<SlimePropertyMap>() {
 		isDelayed: Kleenean,
 		parser: SkriptParser.ParseResult
 	): Boolean {
-		worldName = expressions[0] as Expression<String>
+		worldExpr = expressions[0] as Expression<World>
 		return true
 	}
 
@@ -63,12 +65,17 @@ class ExprFetchSlimeProperties : SimpleExpression<SlimePropertyMap>() {
 
 		val (player) = setupResult
 
-		val worldName = checkWorldName(event, worldName, player) ?: return emptyArray()
+		val world = worldExpr.getSingle(event)
+		if(world == null) {
+			player?.sendMessage("The world cannot be null.")
+			Skript.error("World cannot be null.")
+			return emptyArray()
+		}
 
-		val worldData = SkASWM.getInstance().getConfigManager().getWorldConfig().getWorldConfig(worldName)
+		val worldData = SkASWM.getInstance().getConfigManager().getWorldConfig().getWorldConfig(world.name)
 		if (worldData == null) {
-			player?.sendMessage("World $worldName cannot be found in config")
-			Skript.error("World $worldName cannot be found in config")
+			player?.sendMessage("World ${world.name} cannot be found in config")
+			Skript.error("World ${world.name} cannot be found in config")
 			return emptyArray()
 		}
 
