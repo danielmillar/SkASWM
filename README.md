@@ -6,3 +6,6 @@
 
 > [!CAUTION]
 > SkASWM is currently in development, so this isn't the final product. Changes can happen anytime, so please keep that in mind if you're using it before stable releases.
+
+## 📃 Support and Documentation
+- **Discord Server:** https://discord.com/invite/6jeQkRcMkk
