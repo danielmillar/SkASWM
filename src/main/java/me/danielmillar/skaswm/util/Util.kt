@@ -99,6 +99,7 @@ object Util {
 		val slimeLoader = getSlimeLoader()
 		if (slimePlugin == null || slimeLoader == null) {
 			player?.sendMessage("You must initialize Slime Plugin/Loader before using anything")
+			Skript.error("You must initialize Slime Plugin/Loader before using anything")
 			return null
 		}
 
