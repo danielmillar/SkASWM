@@ -1,6 +1,9 @@
 package me.danielmillar.skaswm.elements.conditions
 
 import ch.njol.skript.Skript
+import ch.njol.skript.doc.Description
+import ch.njol.skript.doc.Name
+import ch.njol.skript.doc.Since
 import ch.njol.skript.lang.Condition
 import ch.njol.skript.lang.Expression
 import ch.njol.skript.lang.SkriptParser
@@ -12,6 +15,9 @@ import me.danielmillar.skaswm.util.Util.checkWorldName
 import me.danielmillar.skaswm.util.Util.setupEvent
 import org.bukkit.event.Event
 
+@Name("Check Slime Property")
+@Description("Checks if specified property in world property map is equal to specified value")
+@Since("1.0.0")
 class CondSlimeWorldProperty : Condition() {
 
 	companion object {
