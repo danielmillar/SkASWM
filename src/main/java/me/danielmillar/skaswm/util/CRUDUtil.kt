@@ -20,7 +20,7 @@ object CRUDUtil {
 		try {
 			val prop = property.prop as SlimeProperty<Int>
 			val convertedValue = Util.anyToInt(value) ?: run {
-				Skript.error("Expected an Int value for property ${property.name} but got null instead!")
+				Skript.error("Expected an Int value for property ${property.name} but got null instead! Value is $value")
 				return
 			}
 
@@ -48,7 +48,7 @@ object CRUDUtil {
 		try {
 			val prop = property.prop as SlimeProperty<Float>
 			val convertedValue = Util.anyToFloat(value) ?: run {
-				Skript.error("Expected a Float value for property ${property.name} but got null instead!")
+				Skript.error("Expected a Float value for property ${property.name} but got null instead! Value is $value")
 				return
 			}
 
@@ -77,7 +77,7 @@ object CRUDUtil {
 		try {
 			val prop = property.prop as SlimeProperty<Boolean>
 			val convertedValue = Util.anyToBoolean(value) ?: run {
-				Skript.error("Expected a Boolean value for property ${property.name} but got null instead!")
+				Skript.error("Expected a Boolean value for property ${property.name} but got null instead! Value is $value")
 				return
 			}
 			properties.setValue(prop, convertedValue)
