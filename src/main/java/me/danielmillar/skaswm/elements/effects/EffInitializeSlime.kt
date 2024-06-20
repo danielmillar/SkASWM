@@ -67,9 +67,24 @@ class EffInitializeSlime : Effect() {
 
 	override fun execute(event: Event) {
 		val bukkitPlugin = Bukkit.getPluginManager().getPlugin("SlimeWorldManager") ?: return
-		slimePlugin = bukkitPlugin as SlimePlugin
-		slimeLoader = slimePlugin.getLoader(
-			SlimeLoaderTypeEnum.valueOf(loaderType.getSingle(event).toString()).toString().lowercase()
-		)
+		try {
+			slimePlugin = bukkitPlugin as SlimePlugin
+			slimeLoader = slimePlugin.getLoader(
+				SlimeLoaderTypeEnum.valueOf(loaderType.getSingle(event).toString()).toString().lowercase()
+			)
+
+			if (getSlimePlugin() == null || getSlimeLoader() == null) {
+				Skript.error(
+					"An error occurred while trying to setup Slime Plugin/Loader. Loader type: ${
+						loaderType.getSingle(
+							event
+						).toString()
+					}"
+				)
+			}
+		} catch (ex: Exception) {
+			Skript.error("Failed to initialize Slime Plugin/Loader: ${ex.message}")
+			ex.printStackTrace()
+		}
 	}
 }
