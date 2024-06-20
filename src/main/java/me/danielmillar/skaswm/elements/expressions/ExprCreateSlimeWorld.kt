@@ -26,10 +26,12 @@ import java.io.IOException
 import java.util.concurrent.*
 
 @Name("Create Slime World")
-@Description("Create a new Slime World with a name, slime properties and whether it's readOnly")
+@Description("Create a new Slime World with a name, slime properties, and whether it's readOnly.")
 @Examples(
-	"create slime world named \"Test\" with props {globalProps}",
-	"new slime world named \"Test\" with props {globalProps} as readOnly"
+	value = [
+		"set {_world} to create slime world named \"Test\" with props {globalProps}",
+		"to {_world} to new slime world named \"Test\" with props {globalProps} as readOnly"
+	]
 )
 @Since("1.0.0")
 class ExprCreateSlimeWorld : SimpleExpression<World>() {

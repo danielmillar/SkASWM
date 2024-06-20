@@ -12,15 +12,17 @@ import ch.njol.skript.lang.util.SimpleExpression
 import ch.njol.util.Kleenean
 import com.infernalsuite.aswm.api.world.properties.SlimePropertyMap
 import me.danielmillar.skaswm.SkASWM
-import me.danielmillar.skaswm.util.Util.checkWorldName
 import me.danielmillar.skaswm.util.Util.setupEvent
 import org.bukkit.World
 import org.bukkit.event.Event
-import sun.awt.geom.Crossings.debug
 
 @Name("Fetch slime world properties")
-@Description("Fetch slime properties using world")
-@Examples("set {_slimeProps} to fetch props of {_world}")
+@Description("Fetch slime properties using a slime world.")
+@Examples(
+	value = [
+		"set {_slimeProps} to fetch props of {_world}"
+	]
+)
 @Since("1.0.0")
 class ExprFetchSlimeWorldProperties : SimpleExpression<SlimePropertyMap>() {
 
@@ -66,7 +68,7 @@ class ExprFetchSlimeWorldProperties : SimpleExpression<SlimePropertyMap>() {
 		val (player) = setupResult
 
 		val world = worldExpr.getSingle(event)
-		if(world == null) {
+		if (world == null) {
 			player?.sendMessage("The world cannot be null.")
 			Skript.error("World cannot be null.")
 			return emptyArray()

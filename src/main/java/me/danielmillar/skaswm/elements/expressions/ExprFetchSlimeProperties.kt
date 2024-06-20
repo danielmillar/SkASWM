@@ -17,8 +17,12 @@ import me.danielmillar.skaswm.util.Util.setupEvent
 import org.bukkit.event.Event
 
 @Name("Fetch slime properties")
-@Description("Fetch slime properties using name")
-@Examples("set {_slimeProps} to fetch props of slime world named \"Test\"")
+@Description("Fetch slime properties using the specified world name.")
+@Examples(
+	value = [
+		"set {_slimeProps} to fetch props of slime world named \"Test\""
+	]
+)
 @Since("1.0.0")
 class ExprFetchSlimeProperties : SimpleExpression<SlimePropertyMap>() {
 

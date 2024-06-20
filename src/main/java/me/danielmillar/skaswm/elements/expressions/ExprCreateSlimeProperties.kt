@@ -16,10 +16,12 @@ import me.danielmillar.skaswm.elements.SlimePropertiesEnum
 import org.bukkit.event.Event
 
 @Name("Create Slime Properties")
-@Description("Create a SlimePropertyMap which has default values")
+@Description("Create a SlimePropertyMap with default values.")
 @Examples(
-	"set {_slimeProperty} to default slime world properties",
-	"set {_slimeProperty} to new slime world properties"
+	value = [
+		"set {_slimeProperty} to default slime world properties",
+		"set {_slimeProperty} to new slime world properties"
+	]
 )
 @Since("1.0.0")
 class ExprCreateSlimeProperties : SimpleExpression<SlimePropertyMap>() {

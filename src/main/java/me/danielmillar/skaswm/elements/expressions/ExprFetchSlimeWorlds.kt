@@ -15,8 +15,12 @@ import me.danielmillar.skaswm.util.Util.setupEvent
 import org.bukkit.event.Event
 
 @Name("Fetch Slime Worlds")
-@Description("List all SlimeWorlds")
-@Examples("set {slimeWorlds::*} to all slime worlds")
+@Description("List all SlimeWorlds.")
+@Examples(
+	value = [
+		"set {slimeWorlds::*} to all slime worlds"
+	]
+)
 @Since("1.0.0")
 class ExprFetchSlimeWorlds : SimpleExpression<String>() {
 
@@ -45,7 +49,7 @@ class ExprFetchSlimeWorlds : SimpleExpression<String>() {
 	}
 
 	override fun isSingle(): Boolean {
-		return true
+		return false
 	}
 
 	override fun getReturnType(): Class<String> {

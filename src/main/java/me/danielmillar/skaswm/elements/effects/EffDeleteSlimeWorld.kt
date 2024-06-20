@@ -19,8 +19,12 @@ import java.io.IOException
 import kotlin.system.measureTimeMillis
 
 @Name("Delete Slime World")
-@Description("Delete a Slime World with a name")
-@Examples("delete slime world named \"Test\"")
+@Description("Delete a Slime World with a specified name.")
+@Examples(
+	value = [
+		"delete slime world named \"Test\""
+	]
+)
 @Since("1.0.0")
 class EffDeleteSlimeWorld : Effect() {
 

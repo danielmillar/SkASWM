@@ -22,8 +22,12 @@ import java.io.IOException
 import kotlin.system.measureTimeMillis
 
 @Name("Load Slime World")
-@Description("Load a new Slime World with a name")
-@Examples("load slime world named \"Test\"")
+@Description("Load a new Slime World with a specified name.")
+@Examples(
+	value = [
+		"load slime world named \"Test\""
+	]
+)
 @Since("1.0.0")
 class EffLoadSlimeWorld : Effect() {
 

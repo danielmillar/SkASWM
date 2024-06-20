@@ -19,8 +19,12 @@ import java.io.IOException
 import kotlin.system.measureTimeMillis
 
 @Name("Clone Slime World")
-@Description("Clone a Slime World based on a current world with a new name")
-@Examples("clone slime world based on \"Test\" named \"Test\"")
+@Description("Clone a Slime World based on a current world with a new name. Clones inherit all properties from the base world.")
+@Examples(
+	value = [
+		"clone slime world based on \"Test\" named \"TestClone\""
+	]
+)
 @Since("1.0.0")
 class EffCloneSlimeWorld : Effect() {
 

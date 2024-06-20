@@ -16,8 +16,12 @@ import org.bukkit.Bukkit
 import org.bukkit.event.Event
 
 @Name("Save Slime World")
-@Description("Save a Slime World")
-@Examples("save slime world named \"Test\"")
+@Description("Save a Slime World with a specified name.")
+@Examples(
+	value = [
+		"save slime world named \"Test\""
+	]
+)
 @Since("1.0.0")
 class EffSaveSlimeWorld : Effect() {
 

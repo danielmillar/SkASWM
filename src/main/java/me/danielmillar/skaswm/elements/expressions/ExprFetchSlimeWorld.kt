@@ -17,8 +17,12 @@ import org.bukkit.World
 import org.bukkit.event.Event
 
 @Name("Fetch Slime World")
-@Description("Fetch slime world from name")
-@Examples("set {_slimeWorld} to fetch slime world named \"Test\"")
+@Description("Fetch a slime world using the specified world name.")
+@Examples(
+	value = [
+		"set {_slimeWorld} to fetch slime world named \"Test\""
+	]
+)
 @Since("1.0.0")
 class ExprFetchSlimeWorld : SimpleExpression<World>() {
 

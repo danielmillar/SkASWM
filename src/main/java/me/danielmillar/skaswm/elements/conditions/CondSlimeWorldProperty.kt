@@ -2,6 +2,7 @@ package me.danielmillar.skaswm.elements.conditions
 
 import ch.njol.skript.Skript
 import ch.njol.skript.doc.Description
+import ch.njol.skript.doc.Examples
 import ch.njol.skript.doc.Name
 import ch.njol.skript.doc.Since
 import ch.njol.skript.lang.Condition
@@ -16,7 +17,13 @@ import me.danielmillar.skaswm.util.Util.setupEvent
 import org.bukkit.event.Event
 
 @Name("Check Slime Property")
-@Description("Checks if specified property in world property map is equal to specified value")
+@Description("Checks if the specified property in the world property map is equal to the specified value.")
+@Examples(
+	value = [
+		"if allow monsters of slime world named \"exampleWorld\" is true",
+		"if spawn x of slime world named \"exampleWorld\" isn't 5"
+	]
+)
 @Since("1.0.0")
 class CondSlimeWorldProperty : Condition() {
 

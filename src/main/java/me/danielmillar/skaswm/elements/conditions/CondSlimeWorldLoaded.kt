@@ -2,6 +2,7 @@ package me.danielmillar.skaswm.elements.conditions
 
 import ch.njol.skript.Skript
 import ch.njol.skript.doc.Description
+import ch.njol.skript.doc.Examples
 import ch.njol.skript.doc.Name
 import ch.njol.skript.doc.Since
 import ch.njol.skript.lang.Condition
@@ -14,7 +15,13 @@ import org.bukkit.Bukkit
 import org.bukkit.event.Event
 
 @Name("Check Slime World Loaded")
-@Description("Checks if specified world is loaded or not")
+@Description("Checks if the specified world is loaded or not.")
+@Examples(
+	value = [
+		"if slime world named \"exampleWorld\" is loaded",
+		"if slime world named \"exampleWorld\" isn't loaded"
+	]
+)
 @Since("1.0.0")
 class CondSlimeWorldLoaded : Condition() {
 

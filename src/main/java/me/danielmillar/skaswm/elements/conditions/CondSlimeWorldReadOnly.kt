@@ -2,21 +2,26 @@ package me.danielmillar.skaswm.elements.conditions
 
 import ch.njol.skript.Skript
 import ch.njol.skript.doc.Description
+import ch.njol.skript.doc.Examples
 import ch.njol.skript.doc.Name
 import ch.njol.skript.doc.Since
 import ch.njol.skript.lang.Condition
 import ch.njol.skript.lang.Expression
 import ch.njol.skript.lang.SkriptParser
 import ch.njol.util.Kleenean
-import com.infernalsuite.aswm.api.world.properties.SlimeProperty
 import me.danielmillar.skaswm.SkASWM
-import me.danielmillar.skaswm.elements.SlimePropertiesEnum
 import me.danielmillar.skaswm.util.Util.checkWorldName
 import me.danielmillar.skaswm.util.Util.setupEvent
 import org.bukkit.event.Event
 
 @Name("Check Slime World ReadOnly")
-@Description("Checks if specified world is readonly or not")
+@Description("Checks if the specified world is readonly or not.")
+@Examples(
+	value = [
+		"if slime world named \"exampleWorld\" is readonly",
+		"if slime world named \"exampleWorld\" isn't readonly"
+	]
+)
 @Since("1.0.0")
 class CondSlimeWorldReadOnly : Condition() {
 
@@ -61,6 +66,6 @@ class CondSlimeWorldReadOnly : Condition() {
 			return false
 		}
 
-		return if(worldData.readOnly) isNegated else !isNegated
+		return if (worldData.readOnly) isNegated else !isNegated
 	}
 }

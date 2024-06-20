@@ -18,8 +18,12 @@ import org.bukkit.event.Event
 import java.util.concurrent.CompletableFuture
 
 @Name("Unload Slime World")
-@Description("Unload a Slime World with a name")
-@Examples("unload slime world named \"Test\"")
+@Description("Unload a Slime World with a specified name.")
+@Examples(
+	value = [
+		"unload slime world named \"Test\""
+	]
+)
 @Since("1.0.0")
 class EffUnloadSlimeWorld : Effect() {
 

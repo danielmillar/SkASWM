@@ -16,9 +16,12 @@ import org.bukkit.Bukkit
 import org.bukkit.event.Event
 
 @Name("Initialize Slime")
-@Description("Initializes the SlimePlugin API and sets up a SlimeLoader based on the type")
+@Description("Initializes the SlimePlugin API and sets up a SlimeLoader based on the specified type.")
 @Examples(
-	"initialize slime plugin with loader file", "initialize slime plugin with loader type file"
+	value = [
+		"initialize slime plugin with loader file",
+		"initialize slime plugin with loader type mongodb",
+	]
 )
 @Since("1.0.0")
 class EffInitializeSlime : Effect() {
