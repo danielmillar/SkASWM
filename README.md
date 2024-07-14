@@ -5,5 +5,3 @@
 ## 📃 Support and Documentation
 
 [![SkriptHubViewTheDocs](http://skripthub.net/static/addon/ViewTheDocsButton.png)](http://skripthub.net/docs/?addon=SkASWM)
-
-- **Discord Server:** https://discord.com/invite/6jeQkRcMkk
