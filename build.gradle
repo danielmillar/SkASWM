@@ -1,6 +1,8 @@
 plugins {
     id 'java'
     id 'org.jetbrains.kotlin.jvm'
+    id 'idea'
+    id 'com.github.johnrengelman.shadow' version '8.1.1'
 }
 
 group = 'me.danielmillar'
@@ -13,15 +15,11 @@ repositories {
         url = "https://repo.papermc.io/repository/maven-public/"
     }
     maven {
-        name = "sonatype"
-        url = "https://oss.sonatype.org/content/groups/public/"
-    }
-    maven {
         name = "Skript"
         url = "https://repo.skriptlang.org/releases"
     }
     maven {
-        name = "Slime"
+        name = "IS-Snapshots"
         url = "https://repo.infernalsuite.com/repository/maven-snapshots/"
     }
     maven {
@@ -33,12 +31,13 @@ repositories {
 dependencies {
     compileOnly "io.papermc.paper:paper-api:1.20.4-R0.1-SNAPSHOT"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
-    compileOnly "com.github.SkriptLang:Skript:2.8.6"
-    compileOnly "com.infernalsuite.aswm:api:1.20.4-R0.1-SNAPSHOT"
+    compileOnly "com.github.SkriptLang:Skript:2.9.0"
+    compileOnly "com.infernalsuite.aswm:api:3.0.0-SNAPSHOT"
+    implementation "com.infernalsuite.aswm:loaders:3.0.0-SNAPSHOT"
     implementation("de.exlll:configlib-yaml:4.5.0")
 }
 
-def targetJavaVersion = 17
+def targetJavaVersion = 21
 java {
     def javaVersion = JavaVersion.toVersion(targetJavaVersion)
     if (JavaVersion.current() < javaVersion) {
@@ -66,6 +65,14 @@ processResources {
         into 'lang/'
     }
 }
+
 kotlin {
-    jvmToolchain(17)
+    jvmToolchain(21)
+}
+
+idea {
+    module {
+        downloadJavadoc = true
+        downloadSources = true
+    }
 }
