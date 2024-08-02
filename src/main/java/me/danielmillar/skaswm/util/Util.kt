@@ -3,10 +3,10 @@ package me.danielmillar.skaswm.util
 import ch.njol.skript.Skript
 import ch.njol.skript.command.EffectCommandEvent
 import ch.njol.skript.lang.Expression
-import com.infernalsuite.aswm.api.SlimePlugin
+import com.infernalsuite.aswm.api.AdvancedSlimePaperAPI
 import com.infernalsuite.aswm.api.loaders.SlimeLoader
 import me.danielmillar.skaswm.elements.effects.EffInitializeSlime.Companion.getSlimeLoader
-import me.danielmillar.skaswm.elements.effects.EffInitializeSlime.Companion.getSlimePlugin
+import me.danielmillar.skaswm.elements.effects.EffInitializeSlime.Companion.getSlimeInstance
 import org.bukkit.Bukkit
 import org.bukkit.Location
 import org.bukkit.Material
@@ -83,19 +83,19 @@ object Util {
 		return spawnLocation
 	}
 
-	fun setupEvent(event: Event): Pair<Player?, Pair<SlimePlugin, SlimeLoader>>? {
+	fun setupEvent(event: Event): Pair<Player?, Pair<AdvancedSlimePaperAPI, SlimeLoader>>? {
 		var player: Player? = null
 		if (event is EffectCommandEvent) player = event.sender as Player
 
-		val slimePlugin = getSlimePlugin()
+		val slimeInstance = getSlimeInstance()
 		val slimeLoader = getSlimeLoader()
-		if (slimePlugin == null || slimeLoader == null) {
-			player?.sendMessage("You must initialize Slime Plugin/Loader before using anything")
-			Skript.error("You must initialize Slime Plugin/Loader before using anything")
+		if (slimeInstance == null || slimeLoader == null) {
+			player?.sendMessage("You must initialize Slime Instance/Loader before using anything")
+			Skript.error("You must initialize Slime Instance/Loader before using anything")
 			return null
 		}
 
-		return Pair(player, Pair(slimePlugin, slimeLoader))
+		return Pair(player, Pair(slimeInstance, slimeLoader))
 	}
 
 	fun checkWorldName(event: Event, worldName: Expression<String>, player: Player?): String? {

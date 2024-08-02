@@ -60,7 +60,7 @@ class EffCloneSlimeWorld : Effect() {
 		val setupResult = setupEvent(event) ?: return
 
 		val (player, slimeData) = setupResult
-		val (slimePlugin, slimeLoader) = slimeData
+		val (slimeInstance, slimeLoader) = slimeData
 
 		val baseWorldName = checkWorldName(event, baseWorldName, player) ?: return
 		val cloneWorldName = checkWorldName(event, clonedWorldName, player) ?: return
@@ -88,7 +88,7 @@ class EffCloneSlimeWorld : Effect() {
 		Bukkit.getScheduler().runTaskAsynchronously(SkASWM.getInstance(), Runnable AsyncTask@{
 			try {
 				val timeTaken = measureTimeMillis {
-					val slimeWorld = slimePlugin.loadWorld(
+					val slimeWorld = slimeInstance.readWorld(
 						slimeLoader,
 						baseWorldName,
 						baseWorldData.readOnly,
@@ -97,7 +97,7 @@ class EffCloneSlimeWorld : Effect() {
 
 					Bukkit.getScheduler().runTask(SkASWM.getInstance(), Runnable SyncTask@{
 						try {
-							slimePlugin.loadWorld(slimeWorld, true)
+							slimeInstance.loadWorld(slimeWorld, true)
 							val bukkitWorld = Bukkit.getWorld(cloneWorldName)
 
 							bukkitWorld?.let {
@@ -112,7 +112,7 @@ class EffCloneSlimeWorld : Effect() {
 							SkASWM.getInstance().getConfigManager().saveWorldConfig()
 						} catch (ex: Exception) {
 							when (ex) {
-								is IllegalArgumentException, is WorldLockedException, is UnknownWorldException, is IOException -> {
+								is UnknownWorldException, is IOException, is CorruptedWorldException, is NewerFormatException -> {
 									player?.sendMessage("Failed to clone world $baseWorldName as $cloneWorldName. Check console for more information!")
 									Skript.error("Failed to clone world $baseWorldName as $cloneWorldName: ${ex.message}")
 								}
@@ -150,8 +150,6 @@ class EffCloneSlimeWorld : Effect() {
 						Skript.error("Failed to load world $baseWorldName. World cannot be found")
 						ex.printStackTrace()
 					}
-
-					is WorldLockedException -> {}
 
 					is IOException, is IllegalArgumentException -> {
 						player?.sendMessage("Failed to create world $baseWorldName. Check console for more information!")

@@ -12,7 +12,6 @@ import ch.njol.skript.lang.util.SimpleExpression
 import ch.njol.util.Kleenean
 import com.infernalsuite.aswm.api.exceptions.UnknownWorldException
 import com.infernalsuite.aswm.api.exceptions.WorldAlreadyExistsException
-import com.infernalsuite.aswm.api.exceptions.WorldLockedException
 import com.infernalsuite.aswm.api.world.SlimeWorld
 import com.infernalsuite.aswm.api.world.properties.SlimePropertyMap
 import me.danielmillar.skaswm.SkASWM
@@ -112,12 +111,7 @@ class ExprCreateSlimeWorld : SimpleExpression<World>() {
 
 		val slimeWorldFuture: CompletableFuture<SlimeWorld> = CompletableFuture.supplyAsync {
 			try {
-				return@supplyAsync slimePlugin.createEmptyWorld(
-					slimeLoader,
-					worldName,
-					isReadOnly,
-					properties
-				)
+				return@supplyAsync slimePlugin.createEmptyWorld(worldName, isReadOnly, properties, slimeLoader)
 			} catch (ex: Exception) {
 				when (ex) {
 					is WorldAlreadyExistsException -> {
@@ -189,7 +183,7 @@ class ExprCreateSlimeWorld : SimpleExpression<World>() {
 			}
 		} catch (ex: Exception) {
 			when (ex) {
-				is IllegalArgumentException, is WorldLockedException, is UnknownWorldException, is IOException -> {
+				is IllegalArgumentException, is UnknownWorldException, is IOException -> {
 					player?.sendMessage("Failed to create/load world $worldName. Check console for more information!")
 					Skript.error("Failed to create/load world $worldName: ${ex.message}")
 				}

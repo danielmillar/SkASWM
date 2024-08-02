@@ -2,6 +2,7 @@ package me.danielmillar.skaswm
 
 import ch.njol.skript.Skript
 import ch.njol.skript.SkriptAddon
+import com.infernalsuite.aswm.loaders.file.FileLoader
 import me.danielmillar.skaswm.config.ConfigManager
 import me.danielmillar.skaswm.elements.Types
 import org.bukkit.plugin.java.JavaPlugin
@@ -29,12 +30,6 @@ class SkASWM : JavaPlugin() {
 
 		if (!hasClass("com.destroystokyo.paper.PaperConfig") || !hasClass("com.infernalsuite.aswm.level.SlimeLevelInstance")) {
 			logger.severe("You're server isn't running SlimeWorldManager fork of Paper, verify that you're using AdvancedSlimeWorldManager")
-			server.pluginManager.disablePlugin(this)
-			return
-		}
-
-		if (server.pluginManager.getPlugin("SlimeWorldManager") == null) {
-			logger.severe("Seems like you're missing the SlimeWorldManager plugin, please install it!")
 			server.pluginManager.disablePlugin(this)
 			return
 		}

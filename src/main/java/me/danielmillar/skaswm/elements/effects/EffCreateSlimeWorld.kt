@@ -9,9 +9,6 @@ import ch.njol.skript.lang.Effect
 import ch.njol.skript.lang.Expression
 import ch.njol.skript.lang.SkriptParser
 import ch.njol.util.Kleenean
-import com.infernalsuite.aswm.api.exceptions.UnknownWorldException
-import com.infernalsuite.aswm.api.exceptions.WorldAlreadyExistsException
-import com.infernalsuite.aswm.api.exceptions.WorldLockedException
 import com.infernalsuite.aswm.api.world.properties.SlimePropertyMap
 import me.danielmillar.skaswm.SkASWM
 import me.danielmillar.skaswm.config.WorldConfig
@@ -19,7 +16,6 @@ import me.danielmillar.skaswm.util.Util.checkWorldName
 import me.danielmillar.skaswm.util.Util.setupEvent
 import org.bukkit.Bukkit
 import org.bukkit.event.Event
-import java.io.IOException
 import kotlin.system.measureTimeMillis
 
 @Name("Create Slime World")
@@ -72,7 +68,7 @@ class EffCreateSlimeWorld : Effect() {
 		val setupResult = setupEvent(event) ?: return
 
 		val (player, slimeData) = setupResult
-		val (slimePlugin, slimeLoader) = slimeData
+		val (slimeInstance, slimeLoader) = slimeData
 
 		val worldName = checkWorldName(event, worldName, player) ?: return
 
@@ -100,16 +96,11 @@ class EffCreateSlimeWorld : Effect() {
 		Bukkit.getScheduler().runTaskAsynchronously(SkASWM.getInstance(), Runnable AsyncTask@{
 			try {
 				val timeTaken = measureTimeMillis {
-					val slimeWorld = slimePlugin.createEmptyWorld(
-						slimeLoader,
-						worldName,
-						isReadOnly,
-						properties
-					)
+					val slimeWorld = slimeInstance.createEmptyWorld(worldName, isReadOnly, properties, slimeLoader)
 
 					Bukkit.getScheduler().runTask(SkASWM.getInstance(), Runnable SyncTask@{
 						try {
-							slimePlugin.loadWorld(slimeWorld, true)
+							slimeInstance.loadWorld(slimeWorld, true)
 
 							val worldData = WorldConfig.fromPropertyMap(properties, isReadOnly)
 							SkASWM.getInstance().getConfigManager().getWorldConfig()
@@ -117,7 +108,7 @@ class EffCreateSlimeWorld : Effect() {
 							SkASWM.getInstance().getConfigManager().saveWorldConfig()
 						} catch (ex: Exception) {
 							when (ex) {
-								is IllegalArgumentException, is WorldLockedException, is UnknownWorldException, is IOException -> {
+								is IllegalArgumentException -> {
 									player?.sendMessage("Failed to create/load world $worldName. Check console for more information!")
 									Skript.error("Failed to create/load world $worldName: ${ex.message}")
 								}
@@ -131,18 +122,8 @@ class EffCreateSlimeWorld : Effect() {
 				player?.sendMessage("Successfully created world $worldName within $timeTaken ms!")
 				Skript.info("Successfully created world $worldName within $timeTaken ms!")
 			} catch (ex: Exception) {
-				when (ex) {
-					is WorldAlreadyExistsException -> {
-						player?.sendMessage("Failed to create world $worldName: world already exists")
-						Skript.error("Failed to create world $worldName: world already exists")
-					}
-
-					is IOException -> {
-						player?.sendMessage("Failed to create world $worldName. Check console for more information!")
-						Skript.error("Failed to create world $worldName. Check logger for more information")
-						ex.printStackTrace()
-					}
-				}
+				Skript.error("Failed to create world $worldName: ${ex.message}")
+				throw ex
 			}
 		})
 	}

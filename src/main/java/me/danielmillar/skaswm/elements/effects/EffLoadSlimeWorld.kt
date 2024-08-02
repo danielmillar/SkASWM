@@ -12,7 +12,6 @@ import ch.njol.util.Kleenean
 import com.infernalsuite.aswm.api.exceptions.CorruptedWorldException
 import com.infernalsuite.aswm.api.exceptions.NewerFormatException
 import com.infernalsuite.aswm.api.exceptions.UnknownWorldException
-import com.infernalsuite.aswm.api.exceptions.WorldLockedException
 import me.danielmillar.skaswm.SkASWM
 import me.danielmillar.skaswm.util.Util.checkWorldName
 import me.danielmillar.skaswm.util.Util.setupEvent
@@ -61,7 +60,7 @@ class EffLoadSlimeWorld : Effect() {
 		val setupResult = setupEvent(event) ?: return
 
 		val (player, slimeData) = setupResult
-		val (slimePlugin, slimeLoader) = slimeData
+		val (slimeInstance, slimeLoader) = slimeData
 
 		val worldName = checkWorldName(event, worldName, player) ?: return
 
@@ -82,7 +81,7 @@ class EffLoadSlimeWorld : Effect() {
 		Bukkit.getScheduler().runTaskAsynchronously(SkASWM.getInstance(), Runnable AsyncTask@{
 			try {
 				val timeTaken = measureTimeMillis {
-					val slimeWorld = slimePlugin.loadWorld(
+					val slimeWorld = slimeInstance.readWorld(
 						slimeLoader,
 						worldName,
 						worldData.readOnly,
@@ -91,7 +90,7 @@ class EffLoadSlimeWorld : Effect() {
 
 					Bukkit.getScheduler().runTask(SkASWM.getInstance(), Runnable SyncTask@{
 						try {
-							slimePlugin.loadWorld(slimeWorld, true)
+							slimeInstance.loadWorld(slimeWorld, true)
 							bukkitWorld = Bukkit.getWorld(worldName)
 
 							bukkitWorld?.let {
@@ -102,7 +101,7 @@ class EffLoadSlimeWorld : Effect() {
 							}
 						} catch (ex: Exception) {
 							when (ex) {
-								is IllegalArgumentException, is WorldLockedException, is UnknownWorldException, is IOException -> {
+								is IllegalArgumentException, is UnknownWorldException, is IOException -> {
 									player?.sendMessage("Failed to create/load world $worldName. Check console for more information!")
 									Skript.error("Failed to create/load world $worldName: ${ex.message}")
 								}
@@ -132,12 +131,6 @@ class EffLoadSlimeWorld : Effect() {
 					is UnknownWorldException -> {
 						player?.sendMessage("Failed to load world $worldName. World cannot be found")
 						Skript.error("Failed to load world $worldName. World cannot be found")
-						ex.printStackTrace()
-					}
-
-					is WorldLockedException -> {
-						player?.sendMessage("Failed to load world $worldName. World is already in use!")
-						Skript.error("Failed to load world $worldName. World is already in use!")
 						ex.printStackTrace()
 					}
 
